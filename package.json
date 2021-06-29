@@ -28,10 +28,19 @@
     "react-spring": "^8.0.27"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server/server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "npm run build",
+    "seed": "node server/scripts/seedDB.js"
+  },
+  "engines": {
+    "node": "12.10.0",
+    "npm": "6.11.3",
+    "yarn": "1.19.1"
   },
   "eslintConfig": {
     "extends": "react-app"
